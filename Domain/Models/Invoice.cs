@@ -12,7 +12,6 @@ namespace Domain.Models
         public int OrderId { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal TotalAmount { get; set; }
-
         public Order Order { get; set; } // 1-1
     }
 }

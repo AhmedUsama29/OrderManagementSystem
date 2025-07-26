@@ -1,4 +1,4 @@
-
+using Persistence;
 namespace OrderManagementSystem
 {
     public class Program
@@ -7,10 +7,8 @@ namespace OrderManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
+            builder.Services.AddInfrastructureRegistration(builder.Configuration);
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
