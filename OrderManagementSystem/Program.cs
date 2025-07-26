@@ -1,20 +1,20 @@
 using Persistence;
+
 namespace OrderManagementSystem
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddInfrastructureRegistration(builder.Configuration);
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddWebApplicationServices(builder.Configuration);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            await app.InitializeDbAsync();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

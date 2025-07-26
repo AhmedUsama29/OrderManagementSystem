@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Contracts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@ namespace Persistence
 
             services.AddDbContext<OrderManagementIdentityDbContext>(options =>
                            options.UseSqlServer(configurations.GetConnectionString("OrderManagementIdentityConnection")));
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.RegisterIdentity();
 
