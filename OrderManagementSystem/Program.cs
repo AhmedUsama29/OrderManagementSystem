@@ -1,4 +1,6 @@
 using Persistence;
+using Services;
+using TaskHive.Middelwares;
 
 namespace OrderManagementSystem
 {
@@ -10,21 +12,28 @@ namespace OrderManagementSystem
 
             builder.Services.AddInfrastructureRegistration(builder.Configuration);
             builder.Services.AddWebApplicationServices(builder.Configuration);
+            builder.Services.AddAplicationServices(builder.Configuration);
 
             var app = builder.Build();
 
             await app.InitializeDbAsync();
 
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    options.DocumentTitle = "Order Management";
+                    options.EnableFilter();
+                    options.DisplayRequestDuration();
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
