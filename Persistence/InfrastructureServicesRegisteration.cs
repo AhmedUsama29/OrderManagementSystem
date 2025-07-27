@@ -33,7 +33,7 @@ namespace Persistence
 
             services.AddIdentityCore<IdentityUser>(config =>
             {
-                config.User.RequireUniqueEmail = true;
+                config.User.RequireUniqueEmail = false;
             })
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<OrderManagementIdentityDbContext>();

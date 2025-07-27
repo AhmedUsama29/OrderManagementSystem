@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServicesAbstraction;
 using Shared.Authentication;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,13 @@ namespace Services
         public static IServiceCollection AddAplicationServices(this IServiceCollection services,
                                                                IConfiguration configuration)
         {
+
+            services.AddScoped<IServiceManager, ServiceManagerWithFactoryDelegate>();
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            services.AddScoped<Func<IAuthenticationService>>(provider => ()
+            => provider.GetRequiredService<IAuthenticationService>());
 
             services.Configure<JWTOptions>(configuration.GetSection("JWTOptions"));
 
