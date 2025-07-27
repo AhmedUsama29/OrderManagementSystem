@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ServiceManagerWithFactoryDelegate(Func<IAuthenticationService> AuthFactory) : IServiceManager
+    public class ServiceManagerWithFactoryDelegate(Func<IAuthenticationService> AuthFactory,
+                                                    Func<IOrderService> OrderFactory) : IServiceManager
     {
         public IAuthenticationService AuthenticationService => AuthFactory.Invoke();
+
+        public IOrderService OrderService => OrderFactory.Invoke();
     }
 }

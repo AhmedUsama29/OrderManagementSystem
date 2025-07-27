@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services.MappingProfiles;
 using ServicesAbstraction;
 using Shared.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Services
 {
     public static class ApplicationServiceRegisteration
@@ -16,12 +11,20 @@ namespace Services
                                                                IConfiguration configuration)
         {
 
+            services.AddAutoMapper(typeof(OrderProfile).Assembly);
+
             services.AddScoped<IServiceManager, ServiceManagerWithFactoryDelegate>();
+
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
             services.AddScoped<Func<IAuthenticationService>>(provider => ()
             => provider.GetRequiredService<IAuthenticationService>());
+
+            services.AddScoped<Func<IOrderService>>(provider => ()
+            => provider.GetRequiredService<IOrderService>());
 
             services.Configure<JWTOptions>(configuration.GetSection("JWTOptions"));
 

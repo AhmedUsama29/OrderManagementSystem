@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Data;
 using Persistence.Identity;
+using Persistence.Repository;
 
 
 namespace Persistence
@@ -22,6 +23,8 @@ namespace Persistence
                            options.UseSqlServer(configurations.GetConnectionString("OrderManagementIdentityConnection")));
 
             services.AddScoped<IDbInitializer, DbInitializer>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.RegisterIdentity();
 
